@@ -6,6 +6,11 @@ const MFE_APP_URL = 'http://localhost:4201/remoteEntry.js';
 const MFE2_APP_URL = 'http://localhost:4202/remoteEntry.js';
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
+  },
+  {
     path: 'login',
     loadChildren: () => loadRemoteModule({
       type: 'module',

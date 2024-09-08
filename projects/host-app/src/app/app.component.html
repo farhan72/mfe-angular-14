@@ -1,10 +1,18 @@
-<ul>
-    <li>
-        <a routerLink="/login">Login from Remote 1</a>
-    </li>
-    <li>
-        <a routerLink="/login2">Login from Remote 2</a>
-    </li>
-</ul>
+<nav>
+    <div class="wrapper">
+      <div class="logo"><a href="#">Logo</a></div>
+      <input type="radio" name="slider" id="menu-btn">
+      <input type="radio" name="slider" id="close-btn">
+      <ul class="nav-links">
+        <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
+        <li><a routerLink="/login">Login Remote 1</a></li>
+        <li><a routerLink="/login2">Login Remote 2</a></li>
+      </ul>
+      <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
+    </div>
+  </nav>
+  
+  <div class="body-text">
+    <router-outlet></router-outlet>
+  </div>
 
-<router-outlet></router-outlet>
