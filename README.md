@@ -1,27 +1,38 @@
-# MonoWorkspace
+# Angular 14 with Micro FE Module Federation Webpack
+==============================================
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.13.
+### Steps to Create a Micro FE Module Federation Project with Angular 14 and Webpack
 
-## Development server
+1. **Create a new Angular 14 project**: `npx @angular/cli@14 new my-app --no-create-application && cd my-app && npm install typescript@4.8.2 -D`
+3. **Install required dependencies**: `npm i webpack webpack-cli concurrently --save-dev`
+4. **Create a new host application**: `npx ng g application your-host-app --routing --style=scss`
+5. **Create a new remote application**: `npx ng g application your-remote-app --routing --style=scss`
+6. **Add Module Federation to the host application**: `npx ng add @angular-architects/module-federation@14 --project your-host-app --port 4200`
+7. **Add Module Federation to the remote application**: `npx ng add @angular-architects/module-federation@14 --project your-remote-app --port 4201` **Note:** The port on each app must be different.
+### Configure `package.json` Scripts
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Add the following scripts to the `package.json` file:
+   
+```json
+{
+  "scripts": {
+    "ng": "ng",
+    "host": "ng serve host-app --configuration development --port 4200",
+    "mfe": "ng serve mfe-app --configuration development --port 4201",
+    "mfe2": "ng serve mfe-app --configuration development --port 4202",
+    "start": "concurrently \"npm run host\" \"npm run mfe\" \"npm run mfe2\"",
+    "build:host": "ng build host-app",
+    "build:mfe": "ng build mfe-app",
+    "build:mfe2": "ng build mfe2-app",
+    "build": "concurrently \"npm run build:host\" \"npm run build:mfe\" \"npm run build:mfe2\"",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "run:all": "node node_modules/@angular-architects/module-federation/src/server/mf-dev-server.js"
+  }
+}
+```
 
-## Code scaffolding
+8. Start the application: ```npm start```
+9. To view the complete code, visit my GitHub repository: [mfe-angular-14](https://github.com/farhan72/mfe-angular-14).
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Thanks for following along!
